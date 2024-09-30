@@ -2,6 +2,8 @@ import express from "express";
 import tasksRoutes from "./routes/tasks.routes.js";
 import { connectToDB } from "./db/connect.js";
 import "dotenv/config";
+import { notFound } from "./middlewares/not-found.js";
+import { errorHandlerMiddleware } from "./middlewares/errorHandler.js";
 const app = express();
 
 const port = 3000;
@@ -14,6 +16,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/tasks", tasksRoutes);
+app.use(notFound);
+
+app.use(errorHandlerMiddleware);
 
 const start = async () => {
   try {

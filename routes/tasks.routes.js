@@ -6,17 +6,15 @@ import {
   getTask,
   updateTask,
 } from "../controllers/tasks.controller.js";
+import { idValidationMiddleware } from "../middlewares/tasks.middlware.js";
 
 const router = express.Router();
 
 router.get("/", getAllTasks);
-
-router.get("/:id", getTask);
-
 router.post("/", createTask);
 
-router.patch("/:id", updateTask);
-
-router.delete("/:id", deleteTask);
+router.get("/:id", idValidationMiddleware, getTask);
+router.patch("/:id", idValidationMiddleware, updateTask);
+router.delete("/:id", idValidationMiddleware, deleteTask);
 
 export default router;
